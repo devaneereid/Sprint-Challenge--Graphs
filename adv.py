@@ -5,6 +5,34 @@ from world import World
 import random
 from ast import literal_eval
 
+
+# setting up Stack and Queue utils
+class Queue():
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, value):
+        self.queue.append(value)
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.pop(0)
+        else:
+            return None
+    def size(self):
+        return len(self.queue)
+
+class Stack():
+    def __init__(self):
+        self.stack = []
+    def push(self, value):
+        self.stack.append(value)
+    def pop(self):
+        if self.size() > 0:
+            return self.stack.pop()
+        else:
+            return None
+    def size(self):
+        return len(self.stack)
+
 # Load world
 world = World()
 
@@ -29,6 +57,35 @@ player = Player(world.starting_room)
 # traversal_path = ['n', 'n']
 traversal_path = []
 
+pathways = {}
+queue = Queue()
+directions = {'n': 's', 's': 'n', 'e': 'w', 'w': 'e'}
+
+# set up Queue and Stack utils - set up above
+# visited = set()
+# next_room = {}
+# directions = {'n':'s', 's':'n', 'e':'w', 'w':'e'}
+
+# look for available exits in the room
+# for exit_options in player.current_room.get_exits():
+#     next_room[exit_options] = '?'
+
+# pathways[world.starting_room.id] = next_room
+
+# add direction options
+
+# def directions(room_id):
+#     next_direction = {}
+#     if 'n' in room_graph[room_id][1].keys():
+#         next_direction['n'] = 's'
+#     if 's' in room_graph[room_id][1].keys():
+#         next_direction['s'] = 'n'
+#     if 'e' in room_graph[room_id][1].keys():
+#         next_direction['e'] = 'w'
+#     if 'w' in room_graph[room_id][1].keys():
+#         next_direction['w'] = 'e'
+
+#     return next_direction
 
 
 # TRAVERSAL TEST - DO NOT MODIFY
