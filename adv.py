@@ -56,36 +56,49 @@ player = Player(world.starting_room)
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
 traversal_path = []
-
+# set up empty Queue and Stack
+q = Queue()
+s = Stack()
 pathways = {}
-queue = Queue()
-directions = {'n': 's', 's': 'n', 'e': 'w', 'w': 'e'}
 
-# set up Queue and Stack utils - set up above
-# visited = set()
-# next_room = {}
-# directions = {'n':'s', 's':'n', 'e':'w', 'w':'e'}
+# look for available exits in the room for player
+next_room = {}
+for exit_options in player.current_room.get_exits():
+    next_room[exit_options] = '?'
 
-# look for available exits in the room
-# for exit_options in player.current_room.get_exits():
-#     next_room[exit_options] = '?'
+pathways[world.starting_room.id] = next_room
 
-# pathways[world.starting_room.id] = next_room
+def move_player(player, direction):
+    # add queue to method
+    q = Queue()
+    # set players current room
+    q.enqueue([player.current_room.id])
+    count = 0
+    # create a set() - stores visited 
+    visited = set()
 
-# add direction options
+    while q.size() > count:
+        d = q.dequeue()
+        curr = d[count -1]
 
-# def directions(room_id):
-#     next_direction = {}
-#     if 'n' in room_graph[room_id][1].keys():
-#         next_direction['n'] = 's'
-#     if 's' in room_graph[room_id][1].keys():
-#         next_direction['s'] = 'n'
-#     if 'e' in room_graph[room_id][1].keys():
-#         next_direction['e'] = 'w'
-#     if 'w' in room_graph[room_id][1].keys():
-#         next_direction['w'] = 'e'
+        # if current is not in visited
+        if curr not in visited:
+            # add it in to visited
+            visited.add(curr)
 
-#     return next_direction
+            for neighbor in pathways[curr]:
+                if '?' == pathways[curr][neighbor]:
+                    print(f"Pathways: ", pathways[curr])
+                    return d
+                else:
+                    # make a copy of the path
+                    neighbors = d.copy()
+                    neighbors.append(pathways[curr][neighbor])
+                    q.enqueue(neighbors)     
+        else:
+            continue
+
+
 
 
 # TRAVERSAL TEST - DO NOT MODIFY
